@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI手书复刻</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>AI手书复刻</h1>
+    <p class="subtitle">上传动画视频 + 角色图，AI自动重绘每一帧</p>
+  </header>
+
+  <main>
+    <!-- Step 1: Upload -->
+    <section id="upload-section" class="card">
+      <h2>1. 上传素材</h2>
+      <div class="upload-row">
+        <div class="upload-box" id="video-drop">
+          <div class="upload-icon">🎬</div>
+          <p>拖放视频文件 或 <label for="video-input" class="link">点击选择</label></p>
+          <input type="file" id="video-input" accept="video/*" hidden>
+          <div id="video-preview" class="preview hidden">
+            <video id="video-thumb" controls muted></video>
+            <span id="video-name"></span>
+          </div>
+        </div>
+        <div class="upload-box" id="char-drop">
+          <div class="upload-icon">🎨</div>
+          <p>拖放角色图 或 <label for="char-input" class="link">点击选择</label></p>
+          <input type="file" id="char-input" accept="image/*" hidden>
+          <div id="char-preview" class="preview hidden">
+            <img id="char-thumb" alt="character">
+            <span id="char-name"></span>
+          </div>
+        </div>
+      </div>
+      <button id="start-btn" class="btn primary" disabled>开始处理</button>
+    </section>
+
+    <!-- Step 2: Video Analysis -->
+    <section id="analysis-section" class="card hidden">
+      <h2>2. 视频分析</h2>
+      <div class="info-grid">
+        <div class="info-item"><label>分辨率</label><span id="info-resolution">-</span></div>
+        <div class="info-item"><label>帧率</label><span id="info-fps">-</span></div>
+        <div class="info-item"><label>时长</label><span id="info-duration">-</span></div>
+        <div class="info-item"><label>总帧数</label><span id="info-total-frames">-</span></div>
+        <div class="info-item"><label>非重复帧</label><span id="info-unique-frames">-</span></div>
+        <div class="info-item"><label>宫格数</label><span id="info-grids">-</span></div>
+        <div class="info-item full"><label>拍数模式</label><span id="info-pattern">-</span></div>
+      </div>
+    </section>
+
+    <!-- Step 3: Pipeline Progress -->
+    <section id="progress-section" class="card hidden">
+      <h2>3. 处理进度</h2>
+      <div class="stepper">
+        <div class="step" data-stage="analyzing">分析</div>
+        <div class="step" data-stage="extracting">提取</div>
+        <div class="step" data-stage="composing_grids">合成</div>
+        <div class="step" data-stage="generating_3view">三视图</div>
+        <div class="step" data-stage="redrawing_grids">重绘</div>
+        <div class="step" data-stage="splitting_grids">拆分</div>
+        <div class="step" data-stage="assembling_video">合成视频</div>
+        <div class="step" data-stage="complete">完成</div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <p class="progress-text" id="progress-text">等待开始...</p>
+      <p class="elapsed" id="elapsed-time"></p>
+      <button id="cancel-btn" class="btn danger hidden">取消</button>
+    </section>
+
+    <!-- Step 4: Result -->
+    <section id="result-section" class="card hidden">
+      <h2>4. 结果</h2>
+      <div class="result-container">
+        <video id="result-video" controls></video>
+        <a id="download-btn" class="btn primary" download>下载视频</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+.venv/
+
+# Secrets
+.env
+
+# Runtime data
+data/
+
+# IDE
+.vscode/
+.idea/
+.history/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Binaries (too large for git, download separately)
+bin/
+
+# Archive (legacy test files)
+_archive/
+
+# Claude
+.claude/

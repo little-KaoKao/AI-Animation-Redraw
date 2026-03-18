@@ -1,0 +1,35 @@
+runninghub:
+  base_url: https://www.runninghub.cn
+  upload_endpoint: /openapi/v2/media/upload/binary
+  image_to_image_endpoint: /openapi/v2/rhart-image-n-g31-flash-official/image-to-image
+  task_status_endpoint: /task/openapi/status
+  task_outputs_endpoint: /task/openapi/outputs
+  poll_interval_seconds: 5
+  max_poll_attempts: 120
+  max_retries: 3
+  retry_backoff_base: 2
+
+processing:
+  # ffmpeg_path is set via .env (default: bin/ffmpeg.exe)
+  max_concurrent_redraws: 4
+  grid_size: 4
+  mpdecimate_params: "hi=64*12:lo=64*5:frac=0.33"
+  output_video_codec: libx264
+  output_video_crf: 18
+
+prompts:
+  threeview_generation: |
+    Generate a character reference sheet with three views: side view (left),
+    front view (center), and back view (right). The character should be shown
+    full-body on a clean neutral background. Maintain the exact appearance,
+    outfit, and style of the reference character.
+
+  grid_redraw: |
+    Redraw the 4-panel animation frame grid, replacing the character with the
+    one shown in the character reference sheet. Maintain the exact same poses,
+    positions, camera angles, and special effects. Keep the animation style consistent
+    across all 4 panels. The character's outfit and appearance must match the
+    reference sheet exactly.
+
+output:
+  default_resolution: "2k"
