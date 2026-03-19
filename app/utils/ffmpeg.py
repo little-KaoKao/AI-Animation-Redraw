@@ -21,6 +21,7 @@ async def run_ffmpeg(*args: str, timeout: int = 600) -> tuple[str, str]:
         cmd,
         capture_output=True,
         timeout=timeout,
+        creationflags=subprocess.CREATE_NO_WINDOW if hasattr(subprocess, "CREATE_NO_WINDOW") else 0,
     )
 
     stdout_str = proc.stdout.decode("utf-8", errors="replace")
@@ -41,6 +42,7 @@ async def probe_video(video_path: str | Path) -> dict:
         cmd,
         capture_output=True,
         timeout=30,
+        creationflags=subprocess.CREATE_NO_WINDOW if hasattr(subprocess, "CREATE_NO_WINDOW") else 0,
     )
 
     stderr_str = proc.stderr.decode("utf-8", errors="replace")

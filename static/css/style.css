@@ -29,7 +29,7 @@ header h1 {
 }
 
 main {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 1rem;
 }
@@ -50,6 +50,18 @@ main {
 
 .hidden {
   display: none !important;
+}
+
+/* Section header */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
+  margin-bottom: 0;
 }
 
 /* Upload */
@@ -83,6 +95,10 @@ main {
 .upload-box p {
   color: #888;
   font-size: 0.9rem;
+}
+
+.asset-pick-btn {
+  margin-top: 0.5rem;
 }
 
 .link {
@@ -138,8 +154,64 @@ main {
   color: white;
 }
 
+.btn.outline {
+  background: transparent;
+  border: 1px solid #3a3a5a;
+  color: #aaa;
+}
+
+.btn.outline:hover:not(:disabled) {
+  border-color: #7c5cfc;
+  color: #7c5cfc;
+}
+
+.btn.small {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+}
+
 .btn:hover:not(:disabled) {
   opacity: 0.85;
+}
+
+/* Grid size selector */
+.grid-size-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.grid-size-row > label {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.grid-size-options {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.grid-size-btn {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border: 1px solid #3a3a5a;
+  border-radius: 6px;
+  background: #12122a;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.grid-size-btn:hover {
+  border-color: #7c5cfc;
+  color: #ccc;
+}
+
+.grid-size-btn.active {
+  background: #7c5cfc;
+  border-color: #7c5cfc;
+  color: white;
 }
 
 /* Info grid */
@@ -235,6 +307,12 @@ main {
   margin-top: 0.3rem;
 }
 
+.progress-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
 /* Result */
 .result-container {
   text-align: center;
@@ -247,12 +325,504 @@ main {
   margin-bottom: 1rem;
 }
 
-/* Responsive */
+.result-actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ── Project list ── */
+.project-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.project-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  border-radius: 8px;
+  background: #12122a;
+  margin-bottom: 0.5rem;
+  transition: background 0.2s;
+}
+
+.project-card:hover {
+  background: #1e1e3a;
+}
+
+.project-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.project-name {
+  display: block;
+  font-weight: 600;
+  color: #ccc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-date {
+  font-size: 0.75rem;
+  color: #555;
+}
+
+.project-meta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.project-status {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.status-done {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+}
+
+.status-failed {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+}
+
+.status-pending {
+  background: rgba(124, 92, 252, 0.2);
+  color: #7c5cfc;
+}
+
+.status-paused {
+  background: rgba(240, 173, 78, 0.2);
+  color: #f0ad4e;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+}
+
+.project-grid-size {
+  font-size: 0.7rem;
+  color: #666;
+}
+
+.project-actions {
+  display: flex;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.empty-hint {
+  color: #555;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+/* ── Three-view ── */
+.threeview-container {
+  text-align: center;
+}
+
+.threeview-container img {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 8px;
+  border: 1px solid #2a2a4a;
+}
+
+/* ── Grid gallery (re-roll) ── */
+.grids-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.8rem;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.grid-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #2a2a4a;
+  transition: border-color 0.2s;
+}
+
+.grid-item:hover {
+  border-color: #7c5cfc;
+}
+
+.grid-item img {
+  width: 100%;
+  display: block;
+}
+
+.grid-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  padding: 1.5rem 0.5rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.grid-label {
+  font-size: 0.8rem;
+  color: #ccc;
+  font-weight: 600;
+}
+
+.grid-success {
+  border-color: #2ecc71;
+}
+
+.grid-failed {
+  border-color: #e74c3c;
+}
+
+.grid-pending {
+  border-color: #555;
+  opacity: 0.7;
+}
+
+.grid-retrying {
+  border-color: #f0ad4e;
+  animation: pulse-border 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: #f0ad4e; }
+  50% { border-color: #7c5cfc; }
+}
+
+.grid-showing-original {
+  border-color: #f0ad4e;
+}
+
+.grid-toggle-hint {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+/* Grid status overlay (during reroll) */
+.grid-status-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  z-index: 2;
+}
+
+.grid-status-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.grid-status-sub {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.grid-status-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #7c5cfc;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.grid-status-result {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(46, 204, 113, 0.9);
+  color: #fff;
+  text-align: center;
+  font-size: 0.75rem;
+  padding: 0.2rem;
+  z-index: 2;
+  animation: fadeOut 3s forwards;
+}
+
+.grid-status-result.failed {
+  background: rgba(231, 76, 60, 0.9);
+}
+
+@keyframes fadeOut {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
+}
+
+/* Grid history button & popover */
+.grid-history-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: #ccc;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.grid-history-btn:hover {
+  background: rgba(124, 92, 252, 0.8);
+  color: #fff;
+}
+
+.grid-history-badge {
+  background: #7c5cfc;
+  color: #fff;
+  font-size: 0.6rem;
+  min-width: 14px;
+  height: 14px;
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.grid-history-popover {
+  position: absolute;
+  top: 28px;
+  right: 4px;
+  background: #1a1a2e;
+  border: 1px solid #3a3a5a;
+  border-radius: 8px;
+  padding: 0.5rem;
+  z-index: 10;
+  min-width: 160px;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.grid-history-popover h4 {
+  font-size: 0.7rem;
+  color: #888;
+  margin-bottom: 0.4rem;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.history-item:hover {
+  background: rgba(124, 92, 252, 0.15);
+}
+
+.history-item.active {
+  background: rgba(124, 92, 252, 0.25);
+  border: 1px solid #7c5cfc;
+}
+
+.history-item img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.history-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.history-item-label {
+  font-size: 0.7rem;
+  color: #ccc;
+  display: block;
+}
+
+.history-item-date {
+  font-size: 0.6rem;
+  color: #555;
+  display: block;
+}
+
+.history-item-failed {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.history-item-failed:hover {
+  background: transparent;
+}
+
+.reroll-btn {
+  background: rgba(124, 92, 252, 0.8);
+  color: white;
+  border: none;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.reroll-btn:hover:not(:disabled) {
+  background: rgba(124, 92, 252, 1);
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: #555;
+  font-weight: normal;
+}
+
+/* ── Asset picker modal ── */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-header h3 {
+  color: #ccc;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: #fff;
+}
+
+.asset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.8rem;
+}
+
+.asset-card {
+  background: #12122a;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.asset-card:hover {
+  border-color: #7c5cfc;
+}
+
+.asset-card img {
+  width: 100%;
+  max-height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.4rem;
+}
+
+.asset-icon {
+  font-size: 2rem;
+  padding: 1rem 0;
+}
+
+.asset-name {
+  display: block;
+  font-size: 0.8rem;
+  color: #ccc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.asset-date {
+  display: block;
+  font-size: 0.7rem;
+  color: #555;
+  margin-top: 0.2rem;
+}
+
+/* ── Responsive ── */
 @media (max-width: 600px) {
   .upload-row {
     flex-direction: column;
   }
   .info-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .project-card {
+    flex-wrap: wrap;
+  }
+  .grids-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }
 }

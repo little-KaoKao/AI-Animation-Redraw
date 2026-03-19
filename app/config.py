@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import os
+import platform
+import shutil
 from pathlib import Path
 from functools import lru_cache
 
@@ -8,10 +10,18 @@ import yaml
 from pydantic_settings import BaseSettings
 
 
+def _default_ffmpeg_path() -> str:
+    """Return a sensible default ffmpeg path based on the current OS."""
+    if platform.system() == "Windows":
+        return "bin\\ffmpeg.exe"
+    # macOS / Linux: expect ffmpeg on PATH
+    return "ffmpeg"
+
+
 class Settings(BaseSettings):
     # .env fields
     runninghub_api_key: str = ""
-    ffmpeg_path: str = "bin/ffmpeg.exe"
+    ffmpeg_path: str = _default_ffmpeg_path()
     host: str = "127.0.0.1"
     port: int = 8000
     data_dir: str = "./data"
@@ -29,10 +39,18 @@ class Settings(BaseSettings):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._load_yaml()
-        # Resolve relative ffmpeg_path to project root
+        # Resolve ffmpeg_path
         fp = Path(self.ffmpeg_path)
         if not fp.is_absolute():
-            self.ffmpeg_path = str(self._project_root / fp)
+            # If it looks like a relative path to a bundled binary, resolve it
+            resolved = self._project_root / fp
+            if resolved.exists():
+                self.ffmpeg_path = str(resolved)
+            else:
+                # Try to find ffmpeg on system PATH
+                found = shutil.which(self.ffmpeg_path)
+                if found:
+                    self.ffmpeg_path = found
 
     def _load_yaml(self):
         config_path = Path(__file__).parent.parent / "config.yaml"

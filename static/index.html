@@ -13,75 +13,136 @@
   </header>
 
   <main>
-    <!-- Step 1: Upload -->
-    <section id="upload-section" class="card">
-      <h2>1. 上传素材</h2>
-      <div class="upload-row">
-        <div class="upload-box" id="video-drop">
-          <div class="upload-icon">🎬</div>
-          <p>拖放视频文件 或 <label for="video-input" class="link">点击选择</label></p>
-          <input type="file" id="video-input" accept="video/*" hidden>
-          <div id="video-preview" class="preview hidden">
-            <video id="video-thumb" controls muted></video>
-            <span id="video-name"></span>
+    <!-- Project list / history -->
+    <section id="project-list-section" class="card">
+      <div class="section-header">
+        <h2>项目列表</h2>
+        <button type="button" id="new-project-btn" class="btn small primary">+ 新建项目</button>
+      </div>
+      <div id="project-list" class="project-list">
+        <p class="empty-hint">暂无项目，点击"新建项目"开始</p>
+      </div>
+    </section>
+
+    <!-- Project workspace (hidden until project selected) -->
+    <div id="workspace" class="hidden">
+
+      <!-- Step 1: Upload -->
+      <section id="upload-section" class="card">
+        <h2>上传素材</h2>
+        <div class="upload-row">
+          <div class="upload-box" id="video-drop">
+            <div class="upload-icon">🎬</div>
+            <p>拖放视频文件 或 <label for="video-input" class="link">点击选择</label></p>
+            <input type="file" id="video-input" accept="video/*" hidden>
+            <div id="video-preview" class="preview hidden">
+              <video id="video-thumb" controls muted></video>
+              <span id="video-name"></span>
+            </div>
+            <button type="button" id="pick-video-asset" class="btn small outline asset-pick-btn">从素材库选择</button>
+          </div>
+          <div class="upload-box" id="char-drop">
+            <div class="upload-icon">🎨</div>
+            <p>拖放角色图 或 <label for="char-input" class="link">点击选择</label></p>
+            <input type="file" id="char-input" accept="image/*" hidden>
+            <div id="char-preview" class="preview hidden">
+              <img id="char-thumb" alt="character">
+              <span id="char-name"></span>
+            </div>
+            <button type="button" id="pick-char-asset" class="btn small outline asset-pick-btn">从素材库选择</button>
           </div>
         </div>
-        <div class="upload-box" id="char-drop">
-          <div class="upload-icon">🎨</div>
-          <p>拖放角色图 或 <label for="char-input" class="link">点击选择</label></p>
-          <input type="file" id="char-input" accept="image/*" hidden>
-          <div id="char-preview" class="preview hidden">
-            <img id="char-thumb" alt="character">
-            <span id="char-name"></span>
+
+        <!-- Grid size selector -->
+        <div class="grid-size-row">
+          <label>宫格数:</label>
+          <div class="grid-size-options">
+            <button type="button" class="grid-size-btn" data-size="1">1 (单帧)</button>
+            <button type="button" class="grid-size-btn active" data-size="4">4 (2×2)</button>
+            <button type="button" class="grid-size-btn" data-size="9">9 (3×3)</button>
           </div>
         </div>
-      </div>
-      <button id="start-btn" class="btn primary" disabled>开始处理</button>
-    </section>
 
-    <!-- Step 2: Video Analysis -->
-    <section id="analysis-section" class="card hidden">
-      <h2>2. 视频分析</h2>
-      <div class="info-grid">
-        <div class="info-item"><label>分辨率</label><span id="info-resolution">-</span></div>
-        <div class="info-item"><label>帧率</label><span id="info-fps">-</span></div>
-        <div class="info-item"><label>时长</label><span id="info-duration">-</span></div>
-        <div class="info-item"><label>总帧数</label><span id="info-total-frames">-</span></div>
-        <div class="info-item"><label>非重复帧</label><span id="info-unique-frames">-</span></div>
-        <div class="info-item"><label>宫格数</label><span id="info-grids">-</span></div>
-        <div class="info-item full"><label>拍数模式</label><span id="info-pattern">-</span></div>
-      </div>
-    </section>
+        <button type="button" id="start-btn" class="btn primary" disabled>开始处理</button>
+      </section>
 
-    <!-- Step 3: Pipeline Progress -->
-    <section id="progress-section" class="card hidden">
-      <h2>3. 处理进度</h2>
-      <div class="stepper">
-        <div class="step" data-stage="analyzing">分析</div>
-        <div class="step" data-stage="extracting">提取</div>
-        <div class="step" data-stage="composing_grids">合成</div>
-        <div class="step" data-stage="generating_3view">三视图</div>
-        <div class="step" data-stage="redrawing_grids">重绘</div>
-        <div class="step" data-stage="splitting_grids">拆分</div>
-        <div class="step" data-stage="assembling_video">合成视频</div>
-        <div class="step" data-stage="complete">完成</div>
-      </div>
-      <div class="progress-bar-container">
-        <div class="progress-bar" id="progress-bar"></div>
-      </div>
-      <p class="progress-text" id="progress-text">等待开始...</p>
-      <p class="elapsed" id="elapsed-time"></p>
-      <button id="cancel-btn" class="btn danger hidden">取消</button>
-    </section>
+      <!-- Step 2: Video Analysis -->
+      <section id="analysis-section" class="card hidden">
+        <h2>视频分析</h2>
+        <div class="info-grid">
+          <div class="info-item"><label>分辨率</label><span id="info-resolution">-</span></div>
+          <div class="info-item"><label>帧率</label><span id="info-fps">-</span></div>
+          <div class="info-item"><label>时长</label><span id="info-duration">-</span></div>
+          <div class="info-item"><label>总帧数</label><span id="info-total-frames">-</span></div>
+          <div class="info-item"><label>非重复帧</label><span id="info-unique-frames">-</span></div>
+          <div class="info-item"><label>宫格数</label><span id="info-grids">-</span></div>
+          <div class="info-item full"><label>拍数模式</label><span id="info-pattern">-</span></div>
+        </div>
+      </section>
 
-    <!-- Step 4: Result -->
-    <section id="result-section" class="card hidden">
-      <h2>4. 结果</h2>
-      <div class="result-container">
-        <video id="result-video" controls></video>
-        <a id="download-btn" class="btn primary" download>下载视频</a>
+      <!-- Step 3: Pipeline Progress -->
+      <section id="progress-section" class="card hidden">
+        <h2>处理进度</h2>
+        <div class="stepper">
+          <div class="step" data-stage="analyzing">分析</div>
+          <div class="step" data-stage="extracting">提取</div>
+          <div class="step" data-stage="composing_grids">合成</div>
+          <div class="step" data-stage="generating_3view">三视图</div>
+          <div class="step" data-stage="redrawing_grids">重绘</div>
+          <div class="step" data-stage="splitting_grids">拆分</div>
+          <div class="step" data-stage="assembling_video">合成视频</div>
+          <div class="step" data-stage="complete">完成</div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <p class="progress-text" id="progress-text">等待开始...</p>
+        <p class="elapsed" id="elapsed-time"></p>
+        <div class="progress-actions">
+          <button type="button" id="pause-btn" class="btn outline hidden">暂停</button>
+          <button type="button" id="resume-btn" class="btn primary hidden">恢复</button>
+          <button type="button" id="cancel-btn" class="btn danger hidden">取消</button>
+        </div>
+      </section>
+
+      <!-- Step 3.5: Three-view result -->
+      <section id="threeview-section" class="card hidden">
+        <h2>三视图参考</h2>
+        <div class="threeview-container">
+          <img id="threeview-img" alt="三视图" />
+        </div>
+      </section>
+
+      <!-- Step 3.5: Grid preview (for re-roll) -->
+      <section id="grids-section" class="card hidden">
+        <h2>宫格预览 <span class="hint">(点击切换原图/重绘，按钮重新生成)</span></h2>
+        <div id="grids-container" class="grids-gallery"></div>
+      </section>
+
+      <!-- Step 4: Result -->
+      <section id="result-section" class="card hidden">
+        <h2>结果</h2>
+        <div class="result-container">
+          <video id="result-video" controls></video>
+          <div class="result-actions">
+            <a id="download-btn" class="btn primary" download>下载视频</a>
+            <button type="button" id="reassemble-btn" class="btn outline small hidden" onclick="reassembleVideo()">更新视频</button>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /workspace -->
+
+    <!-- Asset picker modal -->
+    <div id="asset-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="asset-modal-title">选择素材</h3>
+          <button type="button" id="asset-modal-close" class="modal-close">&times;</button>
+        </div>
+        <div id="asset-modal-body" class="asset-grid"></div>
       </div>
-    </section>
+    </div>
   </main>
 
   <script src="/js/app.js"></script>

@@ -41,6 +41,7 @@ async def assemble_video(
             hold_count = hold_map.holds[idx]
             duration = hold_count * frame_interval
 
+            # ffmpeg concat demuxer requires forward slashes on all platforms
             f.write(f"file '{frame_path.as_posix()}'\n")
             f.write(f"duration {duration:.6f}\n")
 

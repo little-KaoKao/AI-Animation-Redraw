@@ -20,6 +20,7 @@ Upload an animation clip and a character reference image. The system automatical
 ## Prerequisites
 
 - Python 3.12+
+- FFmpeg (see platform-specific instructions below)
 - [RunningHub](https://www.runninghub.cn) API key
 
 ## Quick Start
@@ -32,19 +33,41 @@ Upload an animation clip and a character reference image. The system automatical
    uv venv
    uv pip install -e .
    ```
-2. Download [ffmpeg](https://www.gyan.dev/ffmpeg/builds/) (full build) and place `ffmpeg.exe` into the `bin/` directory.
+
+2. Install FFmpeg:
+
+   **macOS** (via Homebrew):
+   ```bash
+   brew install ffmpeg
+   ```
+
+   **Windows**:
+   Download [ffmpeg](https://www.gyan.dev/ffmpeg/builds/) (full build) and either:
+   - Place `ffmpeg.exe` into the project's `bin/` directory, or
+   - Add ffmpeg to your system PATH
+
+   **Linux** (Debian/Ubuntu):
+   ```bash
+   sudo apt install ffmpeg
+   ```
+
 3. Configure `.env` (copy from `.env.example`):
 
    ```bash
    cp .env.example .env
    # Edit .env with your API key
    ```
+
+   > On macOS/Linux, ffmpeg is auto-detected from PATH. On Windows with `bin/ffmpeg.exe`, no extra config is needed. Otherwise, set `FFMPEG_PATH` in `.env`.
+
 4. (Optional) Edit `config.yaml` to customize prompt templates and processing parameters.
+
 5. Run:
 
    ```bash
    uv run python run.py
    ```
+
 6. Open http://localhost:8000 in your browser.
 
 ## Configuration
@@ -54,7 +77,7 @@ Upload an animation clip and a character reference image. The system automatical
 | Variable               | Description             | Default            |
 | ---------------------- | ----------------------- | ------------------ |
 | `RUNNINGHUB_API_KEY` | Your RunningHub API key | (required)         |
-| `FFMPEG_PATH`        | Path to ffmpeg binary   | `bin/ffmpeg.exe` |
+| `FFMPEG_PATH`        | Path to ffmpeg binary   | Windows: `bin\ffmpeg.exe`, macOS/Linux: `ffmpeg` |
 | `HOST`               | Server bind address     | `127.0.0.1`      |
 | `PORT`               | Server port             | `8000`           |
 | `DATA_DIR`           | Project data directory  | `./data`         |
@@ -86,7 +109,7 @@ Upload video + character image
 ├── config.yaml           # Prompts & processing params
 ├── pyproject.toml        # Dependencies
 ├── run.py                # Entry point
-├── bin/                  # ffmpeg binary (gitignored, download manually)
+├── bin/                  # ffmpeg binary (Windows only, gitignored)
 ├── app/                  # Backend (FastAPI)
 │   ├── config.py         # Settings loader
 │   ├── main.py           # App factory
